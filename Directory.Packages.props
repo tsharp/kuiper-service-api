@@ -1,0 +1,50 @@
+<Project>
+  <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <RestorePackagesConfig>true</RestorePackagesConfig>
+    <RestoreUseStaticGraphEvaluation>true</RestoreUseStaticGraphEvaluation>
+    <GrpcVersion>2.63.0</GrpcVersion>
+  </PropertyGroup>
+  <ItemGroup Label="Package Versions used by this repository">
+    <!-- Common Pinned Packages -->
+    <PackageVersion Include="YamlDotNet" Version="[15.1.6]" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.0" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="CommandLineParser" Version="[2.9.1,3.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
+    
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="[8.0.6,9.0.0)" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="[8.0.6,9.0.0)" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="[8.0.6,9.0.0)" />
+
+    <!-- GRPC -->
+    <PackageVersion Include="Google.Protobuf" Version="3.27.0" />
+    <PackageVersion Include="Grpc.AspNetCore" Version="$(GrpcVersion)" />
+    <PackageVersion Include="Grpc.Core.Api" Version="$(GrpcVersion)" />
+    <PackageVersion Include="Grpc.Net.Client" Version="$(GrpcVersion)" />
+    <PackageVersion Include="Grpc.Tools" Version="$(GrpcVersion)" />
+    <!-- Testing Libraries -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageVersion Include="System.Net.Http.WinHttpHandler" Version="8.0.0" />
+    <PackageVersion Include="xunit" Version="2.6.6" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.6" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
+    <!-- Storage -->
+    <PackageVersion Include="RocksDB" Version="[8.11.3.46984]" />
+    <PackageVersion Include="Microsoft.FASTER.Core" Version="[2.6.5]" />
+    <!-- Others -->
+    <!-- <PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="[3.3.4]" /> -->
+    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies" Version="[1.0.3,2.0)" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="[1.1.1,2.0)" />
+    <PackageVersion Include="MinVer" Version="[5.0.0,6.0)" />
+    <PackageVersion Include="StyleCop.Analyzers" Version="[1.1.118,2.0)" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- To reference a package in all projects, add it to this list. -->
+    <GlobalPackageReference Include="Microsoft.Build.Artifacts" Version="6.1.10" />
+  </ItemGroup>
+</Project>

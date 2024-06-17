@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Kuiper Microsystems Rules" Description="Kuiper Microsystems ruleset for product code." ToolsVersion="15.0">
+  <Localization 
+    ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" 
+    ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
+    <Name Resource="KuiperMicrosystemsRules_Name" />
+    <Description Resource="KuiperMicrosystemsRules_Description" />
+  </Localization>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1200" Action="None" />
+    <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1512" Action="None" />
+    <Rule Id="SA1518" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1101" Action="Error" />
+    <Rule Id="SA1039" Action="Error" />
+    <Rule Id="SA1214" Action="Error" />
+    <Rule Id="RS0016" Action="None" />
+  </Rules>
+</RuleSet>

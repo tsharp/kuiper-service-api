@@ -396,3 +396,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Build Artifacts
+artifacts/
+.build/
+*.sln
+
+# msbuild binary logs
+*.binlog

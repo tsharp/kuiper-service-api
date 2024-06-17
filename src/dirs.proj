@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectFile Include="Kuiper.Clustering.ServiceApi/Kuiper.Clustering.ServiceApi.csproj" />
+  </ItemGroup>
+</Project>
