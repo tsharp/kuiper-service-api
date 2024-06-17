@@ -59,3 +59,14 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test --no-restore --configuration Release
+
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: hacker.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - run: |
+        docker build . -t hacker.azurecr.io/kuiper-service-api:${{ github.sha }}
+        docker push hacker.azurecr.io/kuiper-service-api:${{ github.sha }}
