@@ -39,10 +39,10 @@ jobs:
     runs-on: ubuntu-latest   # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on      
     steps:
-    - name: Extract version number from tag
-        run: |
-          version=${GITHUB_REF#refs/tags/v}
-          echo "VERSION=$version" >> $GITHUB_ENV
+    - name: Extract Version Tag
+      run: |
+        version=${GITHUB_REF#refs/tags/v}
+        echo "VERSION=$version" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v4
