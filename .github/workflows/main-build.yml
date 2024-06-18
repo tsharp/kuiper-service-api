@@ -81,6 +81,8 @@ jobs:
       with:
         context: src/Kuiper.Clustering.ServiceApi
         push: true
+        build-args: |
+          BUILD_CONFIG=Release
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
 
@@ -90,6 +92,8 @@ jobs:
       with:
         context: src/Kuiper.Clustering.ServiceApi
         push: true
+        build-args: |
+          BUILD_CONFIG=Release
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
