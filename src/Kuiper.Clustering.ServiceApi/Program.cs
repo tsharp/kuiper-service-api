@@ -82,7 +82,7 @@ namespace Kuiper.Clustering.ServiceApi
             {
                 var descriptor = ResourcePathParser.Parse(fullPath);
                 var handler = httpContext.RequestServices.ResolveResourceHandler
-                    (descriptor.Api, descriptor.Version, descriptor.ResourceType);
+                    (descriptor.Api, descriptor.Version, descriptor.ResourceKind);
 
                 descriptor.HandlerType = handler.GetType();
 

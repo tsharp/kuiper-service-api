@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Kuiper.Clustering.ServiceApi.Models;
+using System.Text.Json.Serialization;
 
 namespace Kuiper.Clustering.ServiceApi
 {
@@ -8,18 +9,26 @@ namespace Kuiper.Clustering.ServiceApi
         {
         }
 
+        public ResourcePathDescriptor(SystemObject @object) : 
+            this(   @object.ApiVersion,
+                    @object.Metadata.Namespace,
+                    @object.Kind,
+                    @object.Metadata.Name)
+        {
+        }
+
         public ResourcePathDescriptor(
             string api,
             string version,
             string @namespace,
-            string resourceType,
-            string? resourceName,
-            string? subResourcePath)
+            string resourceKind,
+            string? resourceName = null,
+            string? subResourcePath = null)
         {
             Api = api.ToLowerInvariant();
             Version = version.ToLowerInvariant();
             Namespace = @namespace.ToLowerInvariant();
-            ResourceType = resourceType.ToLowerInvariant();
+            ResourceKind = resourceKind.ToLowerInvariant();
             ResourceName = resourceName?.ToLowerInvariant();
             SubResourcePath = subResourcePath?.ToLowerInvariant();
         }
@@ -29,7 +38,7 @@ namespace Kuiper.Clustering.ServiceApi
 
         public string Namespace { get; set; }
 
-        public string ResourceType { get; set; }
+        public string ResourceKind { get; set; }
 
         public string? ResourceName { get; set; }
 
@@ -45,7 +54,7 @@ namespace Kuiper.Clustering.ServiceApi
 
         public string ResourceTypeId
         {
-            get => $"/{ApiVersion}/{Namespace}/{ResourceType}";
+            get => $"/{ApiVersion}/{Namespace}/{ResourceKind}";
         }
 
         public string ResourceId

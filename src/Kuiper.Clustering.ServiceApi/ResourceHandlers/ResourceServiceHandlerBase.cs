@@ -1,11 +1,16 @@
-﻿using Kuiper.Clustering.ServiceApi.Models;
+﻿using Json.Patch;
+using Kuiper.Clustering.ServiceApi.Models;
 using Kuiper.Clustering.ServiceApi.Storage;
+using System.Text;
+using System.Text.Json.Nodes;
 
 namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
 {
     public abstract class ResourceServiceHandlerBase : IResourceServiceHandler
     {
         protected readonly IKeyValueStore configStore;
+
+        protected abstract string ResourceKindName { get; }
 
         public ResourceServiceHandlerBase(IKeyValueStore configStore)
         {
@@ -34,6 +39,8 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
                     return this.HandlePutRequest(httpContext, resourcePathDescriptor, cancellationToken);
                 case "DELETE":
                     return this.HandleDeleteRequest(httpContext, resourcePathDescriptor, cancellationToken);
+                case "PATCH":
+                    return this.HandlePatchRequest(httpContext, resourcePathDescriptor, cancellationToken);
                 default:
                     return this.MethodNotAllowed();
             }
@@ -66,31 +73,57 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
                 return Results.BadRequest("Resource name is required");
             }
 
-            SystemObject? body = null;
+            var existing = await configStore.GetAsync<SystemObject>(resourcePathDescriptor.ResourceId);
 
             try
             {
-                body = await httpContext.Request.ReadFromJsonAsync<SystemObject>();
+                var systemObject = await httpContext.Request.ReadFromJsonAsync<SystemObject>();
+
+                if (existing == null)
+                {
+                    systemObject = await configStore.SetAsync(resourcePathDescriptor.ResourceId, systemObject);
+                    return Results.Created(resourcePathDescriptor.ResourceId, systemObject);
+                }
+
+                systemObject = await configStore.SetAsync(resourcePathDescriptor.ResourceId, systemObject);
+                return Results.Ok(systemObject);
             }
-            catch
+            catch(Exception ex)
             {
+                return Results.BadRequest(ex.Message);
             }
+        }
 
-            if (body == null)
+        protected virtual async Task<IResult> HandlePatchRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask;
+
+            try
             {
-                return Results.BadRequest();
+                var patchSet = await httpContext.Request.ReadFromJsonAsync<JsonPatch>(cancellationToken);
+                
+                if (patchSet == null || !patchSet.Operations.Any())
+                {
+                    return Results.NoContent();
+                }
+
+                var existingData = await configStore.GetAsync<SystemObject>(resourcePathDescriptor.ResourceId);
+
+                if (existingData == null)
+                {
+                    return Results.NotFound();
+                }
+
+                var patchedData = patchSet.Apply(existingData);
+
+                await configStore.SetAsync(resourcePathDescriptor.ResourceId, patchedData);
+
+                return Results.Ok(patchedData);
             }
-
-            body.ApiVersion = resourcePathDescriptor.ApiVersion;
-            body.Metadata = body.Metadata ?? new SystemObjectMetadata() { 
-                Name = resourcePathDescriptor.ResourceName 
-            };
-
-            body.Metadata.Name = resourcePathDescriptor.ResourceName;
-
-            await configStore.SetAsync(resourcePathDescriptor.ResourceId, body);
-
-            return Results.Created(resourcePathDescriptor.ResourceId, body);
+            catch(Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
         }
 
         protected virtual async Task<IResult> HandleGetRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)

@@ -79,13 +79,13 @@ namespace Kuiper.Clustering.ServiceApi.Storage
             return storeObjectResults.FirstOrDefault();
         }
 
-        public async Task SetAsync<T>(string key, T value, CancellationToken cancellationToken = default)
+        public async Task<T?> SetAsync<T>(string key, T value, CancellationToken cancellationToken = default)
         {
             if (value == null)
             {
                 await this.RemoveAsync(key, cancellationToken);
 
-                return;
+                return default;
             }
 
             var storeObject = await this.GetStoreObjectAsync(key, true, cancellationToken);
@@ -113,6 +113,8 @@ namespace Kuiper.Clustering.ServiceApi.Storage
             storeObject.Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
             await this.SaveChangesAsync(cancellationToken);
+
+            return value;
         }
 
         private static T? ConvertStoreObject<T>(InternalStoreObject storeObject)
