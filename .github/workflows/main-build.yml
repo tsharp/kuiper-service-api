@@ -40,7 +40,6 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on      
     steps:
     - name: Extract version number from tag
-        id: extract_version
         run: |
           version=${GITHUB_REF#refs/tags/v}
           echo "VERSION=$version" >> $GITHUB_ENV
@@ -73,6 +72,7 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build and push Docker image (Dev)
+      if: github.ref != 'refs/heads/main'
       uses: docker/build-push-action@v4
       with:
         context: src/Kuiper.Clustering.ServiceApi
