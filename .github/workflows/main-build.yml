@@ -67,18 +67,20 @@ jobs:
 
     - name: Build and push Docker image (Dev)
       if: github.ref != 'refs/heads/main'
+      working-directory: src/Kuiper.Clustering.ServiceApi
       uses: docker/build-push-action@v4
       with:
-        context: src/Kuiper.Clustering.ServiceApi
+        context: .
         push: true
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
 
     - name: Build and push Docker image (Main)
       if: github.ref == 'refs/heads/main'
+      working-directory: src/Kuiper.Clustering.ServiceApi
       uses: docker/build-push-action@v4
       with:
-        context: src/Kuiper.Clustering.ServiceApi
+        context: .
         push: true
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest
