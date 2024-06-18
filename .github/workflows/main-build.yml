@@ -66,21 +66,19 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build and push Docker image (Dev)
-      if: github.ref != 'refs/heads/main'
-      working-directory: src/Kuiper.Clustering.ServiceApi
+      if: ${{ github.ref != 'refs/heads/main' }}
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: src/Kuiper.Clustering.ServiceApi
         push: true
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
 
     - name: Build and push Docker image (Main)
-      if: github.ref == 'refs/heads/main'
-      working-directory: src/Kuiper.Clustering.ServiceApi
+      if: ${{ github.ref != 'refs/heads/main' }}
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: src/Kuiper.Clustering.ServiceApi
         push: true
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest
