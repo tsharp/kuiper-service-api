@@ -39,6 +39,12 @@ jobs:
     runs-on: ubuntu-latest   # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on      
     steps:
+    - name: Extract version number from tag
+        id: extract_version
+        run: |
+          version=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$version" >> $GITHUB_ENV
+
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -66,7 +72,11 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    - run: |
-        cd src/Kuiper.Clustering.ServiceApi
-        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }} --build-arg BUILD_CONFIG='Release'
-        docker push ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }}
+    - name: Build and push Docker image (Dev)
+      uses: docker/build-push-action@v4
+      with:
+        context: src/Kuiper.Clustering.ServiceApi
+        push: true
+        tags: |
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest-dev
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.VERSION }}-dev-${{ github.sha }}
