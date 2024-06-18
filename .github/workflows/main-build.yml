@@ -55,6 +55,16 @@ jobs:
     - name: Execute unit tests
       run: dotnet test --no-restore --configuration Release
 
+    - name: Check if working directory exists
+      run: |
+        if [ ! -d "src/Kuiper.Clustering.ServiceApi/bin/Release" ]; then
+          echo "Directory src/Kuiper.Clustering.ServiceApi/bin/Release does not exist."
+          exit 1
+        fi
+
+    - name: Clear Docker build cache
+      run: docker builder prune -f
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
