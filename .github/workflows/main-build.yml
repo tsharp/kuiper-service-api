@@ -145,8 +145,7 @@ jobs:
         context: src/Kuiper.Clustering.ServiceApi
         push: true
         tags: |
-          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest-dev
-          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.VERSION }}-dev-${{ github.sha }}
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
 
     - name: Build and push Docker image (Main)
       if: github.ref == 'refs/heads/main'
@@ -156,4 +155,4 @@ jobs:
         push: true
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest
-          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.VERSION }}-${{ github.sha }}
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.fullSemVer }}
