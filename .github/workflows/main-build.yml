@@ -28,6 +28,11 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
+
     - name: Version
       id: version_step
       uses: gittools/actions/gitversion/execute@v1.1.1
