@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <ArtifactsPath>$(BaseArtifactsPath)\$(MSBuildThisFileName)</ArtifactsPath>
+    <PublishDir>$(ArtifactsPath)</PublishDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +19,9 @@
 
   <ItemGroup>
     <Folder Include="ResourceHandlers\v1\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <Artifact Include="$(OutDir)" FileMatch="Dockerfile" DestinationFolder="$(ArtifactsPath)" AlwaysCopy="True"  /> -->
   </ItemGroup>
 </Project>

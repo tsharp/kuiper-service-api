@@ -1,10 +1,16 @@
 using Kuiper.Clustering.ServiceApi.Storage;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace Kuiper.Clustering.ServiceApi
 {
     public class Program
     {
+        static bool IsLinux()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+        }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -22,16 +28,22 @@ namespace Kuiper.Clustering.ServiceApi
                 var application_data = Environment.SpecialFolder.ApplicationData;
                 
                 // Create a directory for the application data
-                var application_data_path = Path.Combine(Environment.GetFolderPath(application_data), "Kuiper");
+                string application_data_path = Path.Combine(Environment.GetFolderPath(application_data), "kuiper_data");
 
-                if (!Directory.Exists(application_data_path))
+                if (IsLinux())
                 {
-                    Directory.CreateDirectory(application_data_path);
+                    application_data_path = "/var/lib/kuiperdb";
                 }
 
                 var system_db_path = Path.Combine(application_data_path, "system.db");
 
                 Console.WriteLine($"Database Path: {system_db_path}");
+
+                if (!Directory.Exists(application_data_path))
+                {
+                    Console.WriteLine("Creating data directory ...");
+                    Directory.CreateDirectory(application_data_path);
+                }
 
                 // Configure the database to use SQLite
                 options.UseSqlite($"Data Source={system_db_path}");
