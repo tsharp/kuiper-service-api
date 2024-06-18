@@ -68,5 +68,5 @@ jobs:
 
     - run: |
         cd src/Kuiper.Clustering.ServiceApi
-        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }}
+        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }} --build-arg BUILD_CONFIG='Release'
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }}

@@ -1,9 +1,9 @@
 # Stage 1: Build stage
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 as build
-ARG RUNTIME='Debug'
+ARG BUILD_CONFIG='Debug'
 
 WORKDIR /app
-COPY ./bin/${RUNTIME} .
+COPY ./bin/${BUILD_CONFIG} .
 
 # Stage 2: Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0 AS runtime
