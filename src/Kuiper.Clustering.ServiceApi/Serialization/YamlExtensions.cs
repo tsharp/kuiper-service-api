@@ -8,8 +8,6 @@ namespace Kuiper.Clustering.ServiceApi.Serialization
         public static string SerializeToYaml(this object value)
         {
             var serializer = new SerializerBuilder()
-                // .WithEventEmitter(emitter => new NullValueSkippingEventEmitter(emitter))
-                .WithTypeConverter(new SystemObjectMetadataTypeConverter())
                 .WithTypeConverter(new JsonElementYamlTypeConverter())
                 .WithTypeInspector(x => new SortedTypeInspector(x))
                 .WithNamingConvention(HyphenatedNamingConvention.Instance)

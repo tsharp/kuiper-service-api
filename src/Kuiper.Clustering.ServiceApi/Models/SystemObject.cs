@@ -17,9 +17,9 @@ namespace Kuiper.Clustering.ServiceApi.Models
 
         [DataMember(Order = 2)]
         [YamlMember(Order = 2)]
-        public SystemObjectMetadata Metadata { get; set; } = new SystemObjectMetadata();
+        public required SystemObjectMetadata Metadata { get; set; }
 
         [JsonExtensionData]
-        public IDictionary<string, object> Properties { get; set; }
+        public IDictionary<string, object>? Properties { get; set; }
     }
 }

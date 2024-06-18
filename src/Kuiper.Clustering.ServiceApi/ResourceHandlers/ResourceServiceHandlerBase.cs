@@ -82,7 +82,10 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
             }
 
             body.ApiVersion = resourcePathDescriptor.ApiVersion;
-            body.Metadata = body.Metadata ?? new SystemObjectMetadata();
+            body.Metadata = body.Metadata ?? new SystemObjectMetadata() { 
+                Name = resourcePathDescriptor.ResourceName 
+            };
+
             body.Metadata.Name = resourcePathDescriptor.ResourceName;
 
             await configStore.SetAsync(resourcePathDescriptor.ResourceId, body);
