@@ -60,13 +60,13 @@ jobs:
     - name: Execute unit tests
       run: dotnet test --no-restore --configuration Release
 
-
     - uses: azure/docker-login@v1
       with:
-        login-server: hacker.azurecr.io
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
     - run: |
-        docker build . -t hacker.azurecr.io/kuiper-service-api:${{ github.sha }}
-        docker push hacker.azurecr.io/kuiper-service-api:${{ github.sha }}
+        cd src/Kuiper.Clustering.ServiceApi
+        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ github.sha }}
