@@ -1,18 +1,31 @@
-﻿using Kuiper.Clustering.ServiceApi.Storage;
+﻿using Kuiper.Clustering.ServiceApi.Models;
+using Kuiper.Clustering.ServiceApi.Storage;
 
 namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
 {
-    public class GenericResourceServiceHandler : IResourceServiceHandler
+    public abstract class ResourceServiceHandlerBase : IResourceServiceHandler
     {
-        private readonly IKeyValueStore configStore;
+        protected readonly IKeyValueStore configStore;
 
-        public GenericResourceServiceHandler(IKeyValueStore configStore)
+        public ResourceServiceHandlerBase(IKeyValueStore configStore)
         {
             this.configStore = configStore;
         }
 
+        protected virtual bool CanHandleResourceRequest(ResourcePathDescriptor resourcePathDescriptor, out IResult? result)
+        {
+            result = null;
+
+            return true;
+        }
+
         public Task<IResult> HandleRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
         {
+            if (!this.CanHandleResourceRequest(resourcePathDescriptor, out IResult? result))
+            {
+                return Task.FromResult(result ?? Results.BadRequest());
+            }
+
             switch (httpContext.Request.Method)
             {
                 case "GET":
@@ -22,11 +35,16 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
                 case "DELETE":
                     return this.HandleDeleteRequest(httpContext, resourcePathDescriptor, cancellationToken);
                 default:
-                    return Task.FromResult(Results.Problem("Method not allowed", statusCode: StatusCodes.Status405MethodNotAllowed));
+                    return this.MethodNotAllowed();
             }
         }
 
-        private async Task<IResult> HandleDeleteRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
+        protected Task<IResult> MethodNotAllowed()
+        {
+            return Task.FromResult(Results.Problem("Method not allowed", statusCode: StatusCodes.Status405MethodNotAllowed));
+        }
+
+        protected virtual async Task<IResult> HandleDeleteRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(resourcePathDescriptor.ResourceName))
             {
@@ -41,18 +59,18 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
             return Results.NotFound();
         }
 
-        private async Task<IResult> HandlePutRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
+        protected virtual async Task<IResult> HandlePutRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(resourcePathDescriptor.ResourceName))
             {
                 return Results.BadRequest("Resource name is required");
             }
 
-            IDictionary<string, object>? body = null;
+            SystemObject? body = null;
 
             try
             {
-                body = await httpContext.Request.ReadFromJsonAsync<IDictionary<string, object>>();
+                body = await httpContext.Request.ReadFromJsonAsync<SystemObject>();
             }
             catch
             {
@@ -63,20 +81,20 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
                 return Results.BadRequest();
             }
 
-            body.Add("apiVersion", resourcePathDescriptor.ApiVersion);
-            body.Add("namespace", resourcePathDescriptor.Namespace);
-            body.Add("name", resourcePathDescriptor.ResourceName);
+            body.ApiVersion = resourcePathDescriptor.ApiVersion;
+            body.Metadata = body.Metadata ?? new SystemObjectMetadata();
+            body.Metadata.Name = resourcePathDescriptor.ResourceName;
 
             await configStore.SetAsync(resourcePathDescriptor.ResourceId, body);
 
             return Results.Created(resourcePathDescriptor.ResourceId, body);
         }
 
-        private async Task<IResult> HandleGetRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
+        protected virtual async Task<IResult> HandleGetRequest(HttpContext httpContext, ResourcePathDescriptor resourcePathDescriptor, CancellationToken cancellationToken = default)
         {
             if (!string.IsNullOrWhiteSpace(resourcePathDescriptor.ResourceName))
             {
-                var config = await configStore.GetAsync<object>(resourcePathDescriptor.ResourceId);
+                var config = await configStore.GetAsync<SystemObject>(resourcePathDescriptor.ResourceId);
 
                 if (config == null)
                 {
@@ -86,8 +104,8 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
                 return Results.Json(config);
             }
 
-            
-            return Results.Json(await configStore.ScanAsync<object>(resourcePathDescriptor.ResourceTypeId, cancellationToken));
-        }        
+
+            return Results.Json(await configStore.ScanAsync<SystemObject>(resourcePathDescriptor.ResourceTypeId, cancellationToken));
+        }
     }
 }

@@ -3,7 +3,7 @@
 namespace Kuiper.Clustering.ServiceApi.Models
 {
     [DataContract]
-    public class GenericSystemObject : SystemObject<object>
+    public class GenericSystemObject : SystemObject
     {
     }
 }

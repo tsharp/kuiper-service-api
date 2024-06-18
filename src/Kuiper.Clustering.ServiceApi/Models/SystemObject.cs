@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using YamlDotNet.Serialization;
 
 namespace Kuiper.Clustering.ServiceApi.Models
 {
     [DataContract]
-    public class SystemObject<TData> : ISystemObject
-        where TData : class, new()
+    public class SystemObject : ISystemObject
     {
         [DataMember(Order = 0)]
         [YamlMember(Order = 0)]
@@ -17,14 +17,9 @@ namespace Kuiper.Clustering.ServiceApi.Models
 
         [DataMember(Order = 2)]
         [YamlMember(Order = 2)]
-        public SystemObjectMetadata? Metadata { get; set; }
+        public SystemObjectMetadata Metadata { get; set; } = new SystemObjectMetadata();
 
-        [DataMember(Order = 3)]
-        [YamlMember(Order = 3)]
-        public string? Type { get; set; }
-
-        [DataMember(Order = 4)]
-        [YamlMember(Order = 4)]
-        public TData? Data { get; set; }
+        [JsonExtensionData]
+        public IDictionary<string, object> Properties { get; set; }
     }
 }

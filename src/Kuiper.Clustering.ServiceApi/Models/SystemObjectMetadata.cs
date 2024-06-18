@@ -4,6 +4,8 @@ namespace Kuiper.Clustering.ServiceApi.Models
 {
     public class SystemObjectMetadata
     {
+        public string Name { get; set; }
+
         public IDictionary<string, object> Annotations { get; set; }
 
         [JsonExtensionData]

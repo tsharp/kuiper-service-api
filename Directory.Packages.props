@@ -17,6 +17,9 @@
     <PackageVersion Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
     
+    <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="[7.6.1,8.0.0)" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="[7.6.1,8.0.0)" />
+
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="[8.0.6,9.0.0)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="[8.0.6,9.0.0)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="[8.0.6,9.0.0)" />
