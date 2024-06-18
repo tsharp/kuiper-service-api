@@ -84,7 +84,7 @@ jobs:
         build-args: |
           BUILD_CONFIG=Release
         tags: |
-          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.NuGetPreReleaseTagV2 }}
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.majorMinorPatch }}.${{ env.commitsSinceVersionSource }}-dev-${{ env.shortSha }}
 
     - name: Build and push Docker image (Main)
       if: ${{ github.ref == 'refs/heads/main' }}
@@ -96,4 +96,4 @@ jobs:
           BUILD_CONFIG=Release
         tags: |
           ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:latest
-          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.NuGetVersionV2 }}
+          ${{ secrets.ACR_LOGIN_SERVER }}/kuiper-service-api:${{ env.majorMinorPatch }}.${{ env.commitsSinceVersionSource }}-${{ env.shortSha }}
