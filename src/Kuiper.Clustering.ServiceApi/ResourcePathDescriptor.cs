@@ -1,4 +1,4 @@
-﻿using Kuiper.Clustering.ServiceApi.Models;
+﻿using Kuiper.Clustering.ServiceApi.Dto;
 using System.Text.Json.Serialization;
 
 namespace Kuiper.Clustering.ServiceApi

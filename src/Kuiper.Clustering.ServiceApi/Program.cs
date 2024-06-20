@@ -1,5 +1,7 @@
+using Kuiper.Clustering.ServiceApi.Middware;
 using Kuiper.Clustering.ServiceApi.Security;
 using Kuiper.Clustering.ServiceApi.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -20,6 +22,7 @@ namespace Kuiper.Clustering.ServiceApi
 
             // Add services to the container.
             builder.Services.AddAuthorization();
+            builder.Services.AddKuiperServices();
             builder.Services.AddAuthentication(options =>
             {
                 options.AddScheme<MutualTlsAuthenticationHandler>(MutualTlsAuthenticationHandler.SchemeName, MutualTlsAuthenticationHandler.DisplayName);
@@ -72,11 +75,12 @@ namespace Kuiper.Clustering.ServiceApi
             });
 
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapKuiperServicesEndpoints(app);
 
             app.Map("/api/{*fullPath}", async (HttpContext httpContext, string fullPath) =>
             {

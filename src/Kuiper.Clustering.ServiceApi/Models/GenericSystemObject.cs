@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Kuiper.Clustering.ServiceApi.Dto;
 
 namespace Kuiper.Clustering.ServiceApi.Models
 {
