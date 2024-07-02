@@ -1,6 +1,11 @@
+using Kuiper.Clustering.ServiceApi.Middware;
+using Kuiper.Clustering.ServiceApi.Security;
 using Kuiper.Clustering.ServiceApi.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Kuiper.Clustering.ServiceApi
 {
@@ -17,8 +22,28 @@ namespace Kuiper.Clustering.ServiceApi
 
             // Add services to the container.
             builder.Services.AddAuthorization();
+            builder.Services.AddKuiperServices();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.AddScheme<MutualTlsAuthenticationHandler>(MutualTlsAuthenticationHandler.SchemeName, MutualTlsAuthenticationHandler.DisplayName);
+            });
+
             builder.Services.AddResourceHandlers();
             builder.Services.AddScoped<IKeyValueStore, KvStoreDbContext>();
+            builder.Services.ConfigureHttpJsonOptions(options =>
+            {
+                options.SerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
+                options.SerializerOptions.PropertyNameCaseInsensitive = true;
+                options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.SerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                options.SerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
+                options.SerializerOptions.IgnoreReadOnlyFields = true;
+                options.SerializerOptions.IgnoreReadOnlyProperties = true;
+                options.SerializerOptions.IncludeFields = true;
+                options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+
+                options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             builder.Services.AddDbContext<KvStoreDbContext>(options =>
             {
@@ -50,16 +75,18 @@ namespace Kuiper.Clustering.ServiceApi
             });
 
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapKuiperServicesEndpoints(app);
 
             app.Map("/api/{*fullPath}", async (HttpContext httpContext, string fullPath) =>
             {
                 var descriptor = ResourcePathParser.Parse(fullPath);
                 var handler = httpContext.RequestServices.ResolveResourceHandler
-                    (descriptor.Api, descriptor.Version, descriptor.ResourceType);
+                    (descriptor.Group, descriptor.Version, descriptor.ResourceKind);
 
                 descriptor.HandlerType = handler.GetType();
 

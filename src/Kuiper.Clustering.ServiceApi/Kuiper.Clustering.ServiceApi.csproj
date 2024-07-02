@@ -11,17 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JsonPatch.Net" />
     <PackageReference Include="YamlDotNet" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ResourceHandlers\v1\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- <Artifact Include="$(OutDir)" FileMatch="Dockerfile" DestinationFolder="$(ArtifactsPath)" AlwaysCopy="True"  /> -->
   </ItemGroup>
 </Project>
