@@ -6,7 +6,7 @@ namespace Kuiper.Clustering.ServiceApi
 {
     public static class ResourceServiceRouter
     {
-        private static readonly ConcurrentDictionary<(string Api, string Version, string ResourceType), Type> Cache = new ConcurrentDictionary<(string Api, string Version, string ResourceType), Type>();
+        private static readonly ConcurrentDictionary<(string Group, string Version, string ResourceType), Type> Cache = new ConcurrentDictionary<(string Group, string Version, string ResourceType), Type>();
 
         static ResourceServiceRouter()
         {
@@ -30,7 +30,7 @@ namespace Kuiper.Clustering.ServiceApi
                 }
 
                 Cache[(
-                    attribute.Api.ToLowerInvariant(),
+                    attribute.Group.ToLowerInvariant(),
                     attribute.Version.ToLowerInvariant(),
                     attribute.ResourceType.ToLowerInvariant())] = serviceHandlerType;
             }
@@ -55,10 +55,10 @@ namespace Kuiper.Clustering.ServiceApi
             return services;
         }
 
-        public static IResourceServiceHandler ResolveResourceHandler(this IServiceProvider serviceProvider, string api, string version, string resourceType)
+        public static IResourceServiceHandler ResolveResourceHandler(this IServiceProvider serviceProvider, string group, string version, string resourceType)
         {
             // Check if the service type is already cached
-            if (!Cache.TryGetValue((api, version, resourceType), out var serviceType))
+            if (!Cache.TryGetValue((group, version, resourceType), out var serviceType))
             {
                 return serviceProvider.GetRequiredService<NotFoundResourceServiceHandler>();
             }

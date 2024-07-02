@@ -154,7 +154,7 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
             }
 
 
-            return Results.Json(await configStore.ScanAsync<TSystemObject>(resourcePathDescriptor.ResourceTypeId, cancellationToken));
+            return Results.Json(await configStore.ScanAsync<SystemObject>(resourcePathDescriptor.ResourceTypeId, cancellationToken));
         }
     }
 }

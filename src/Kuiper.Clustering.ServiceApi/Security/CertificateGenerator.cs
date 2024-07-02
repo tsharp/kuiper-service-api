@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Formats.Asn1;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -7,19 +8,19 @@ namespace Kuiper.Clustering.ServiceApi.Security
     public class PemCertificateData
     {
         public string FriendlyName { get; set; }
-        public string EncodedPublicKey { get; set; }
+        public string EncodedCertificate { get; set; }
         public string EncodedPrivateKey { get; set; }
 
         public string PemCertificate
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(EncodedPublicKey))
+                if (string.IsNullOrWhiteSpace(EncodedCertificate))
                 {
                     return string.Empty;
                 }
 
-                byte[] certificateData = Convert.FromBase64String(EncodedPublicKey);
+                byte[] certificateData = Convert.FromBase64String(EncodedCertificate);
 
                 var result = Encoding.ASCII.GetString(certificateData);
 
@@ -135,12 +136,20 @@ namespace Kuiper.Clustering.ServiceApi.Security
 
             return new PemCertificateData
             {
-                EncodedPublicKey = certificate.ExportCertificatePem().ToBase64(),
+                EncodedCertificate = certificate.ExportCertificatePem().ToBase64(),
                 EncodedPrivateKey = privateKey.ExportPkcs8PrivateKeyPem().ToBase64()
             };
         }
 
-        public static PemCertificateData SelfSignedCertificateAuthority(string friendlyName, string commonName, int validYears, params string[] subjectNames)
+        static byte[] GetKeyIdentifier(this X509Certificate2 certificate)
+        {
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                return sha1.ComputeHash(certificate.RawData);
+            }
+        }
+
+        public static PemCertificateData CreateCertificateAuthority(string friendlyName, string commonName, int validYears, X509Certificate2? issuerCertificate, params string[] subjectNames)
         {
             X500DistinguishedName distinguishedName = new X500DistinguishedName(commonName);
 
@@ -152,8 +161,13 @@ namespace Kuiper.Clustering.ServiceApi.Security
                     HashAlgorithmName.SHA384,
                     RSASignaturePadding.Pkcs1);
 
-                certificateRequest.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, false));
+                if (issuerCertificate != null)
+                {
+                    var akiExtension = new X509Extension(new Oid("2.5.29.35"), issuerCertificate.GetKeyIdentifier(), false);
+                    certificateRequest.CertificateExtensions.Add(akiExtension);
+                }
 
+                certificateRequest.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, false));
                 certificateRequest.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(certificateRequest.PublicKey, false));
 
                 certificateRequest.CertificateExtensions.Add(new X509KeyUsageExtension(
@@ -173,9 +187,23 @@ namespace Kuiper.Clustering.ServiceApi.Security
                     certificateRequest.CertificateExtensions.Add(subjectAlternativeNameBuilder.Build());
                 }
 
-                X509Certificate2 certificate = certificateRequest.CreateSelfSigned(new DateTimeOffset(DateTime.UtcNow.AddMinutes(-30)), new DateTimeOffset(DateTime.UtcNow.AddYears(validYears)));
+                X509Certificate2? certificate = null;
 
-                return certificate.ExportAsEncodedPem();
+                if (issuerCertificate != null)
+                {
+                    certificate = certificateRequest.Create(issuerCertificate, new DateTimeOffset(DateTime.UtcNow.AddMinutes(-30)), new DateTimeOffset(DateTime.UtcNow.AddYears(validYears)), Guid.NewGuid().ToByteArray());
+                    certificate = certificate.CopyWithPrivateKey(key);
+                }
+                else
+                {
+                    certificate = certificateRequest.CreateSelfSigned(new DateTimeOffset(DateTime.UtcNow.AddMinutes(-30)), new DateTimeOffset(DateTime.UtcNow.AddYears(validYears)));
+                    certificate = certificate.CopyWithPrivateKey(key);
+                }
+
+                var result = certificate.ExportAsEncodedPem();
+                result.FriendlyName = friendlyName;
+
+                return result;
             }
         }
     }

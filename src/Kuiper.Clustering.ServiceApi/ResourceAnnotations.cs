@@ -3,13 +3,13 @@
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ResourceTypeAttribute : Attribute
     {
-        public string Api { get; }
+        public string Group { get; }
         public string Version { get; }
         public string ResourceType { get; }
 
-        public ResourceTypeAttribute(string api, string version, string resourceType)
+        public ResourceTypeAttribute(string group, string version, string resourceType)
         {
-            Api = api;
+            Group = group;
             Version = version;
             ResourceType = resourceType;
         }

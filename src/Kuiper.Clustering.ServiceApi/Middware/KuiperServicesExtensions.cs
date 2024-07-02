@@ -7,7 +7,8 @@ namespace Kuiper.Clustering.ServiceApi.Middware
         public static IServiceCollection AddKuiperServices(this IServiceCollection services, KuiperEndpointConfiguration? endpointConfiguration = null)
         {
             services
-                .AddScoped<KuiperConfigurationMiddleware>()
+                .AddScoped<WellKnownMiddleware>()
+                .AddScoped<CaDiscoveryMiddleware>()
                 .AddSingleton(endpointConfiguration ?? new KuiperEndpointConfiguration());
 
             return services;
@@ -16,8 +17,9 @@ namespace Kuiper.Clustering.ServiceApi.Middware
         private static IEndpointConventionBuilder MapKuiperWellKnownEndpoint(this IEndpointRouteBuilder endpoints,
             KuiperEndpointConfiguration endpointConfiguration)
         {
-            var pipeline = endpoints.CreateApplicationBuilder()
-                .UseMiddleware<KuiperConfigurationMiddleware>()
+            var pipeline = endpoints
+                .CreateApplicationBuilder()
+                .UseMiddleware<WellKnownMiddleware>()
                 .Build();
 
             return endpoints.Map($"/{endpointConfiguration.WellKnownEndpoint}", pipeline)
@@ -27,7 +29,8 @@ namespace Kuiper.Clustering.ServiceApi.Middware
         private static IEndpointConventionBuilder MapKuiperKeysDiscoveryEndpoint(this IEndpointRouteBuilder endpoints,
             KuiperEndpointConfiguration endpointConfiguration)
         {
-            var pipeline = endpoints.CreateApplicationBuilder()
+            var pipeline = endpoints
+                .CreateApplicationBuilder()
                 .Build();
 
             return endpoints.Map($"/{endpointConfiguration.KeysEndpoint}", pipeline)
@@ -37,10 +40,12 @@ namespace Kuiper.Clustering.ServiceApi.Middware
         private static IEndpointConventionBuilder MapKuiperCaDiscoveryEndpoint(this IEndpointRouteBuilder endpoints,
            KuiperEndpointConfiguration endpointConfiguration)
         {
-            var pipeline = endpoints.CreateApplicationBuilder()
+            var pipeline = endpoints
+                .CreateApplicationBuilder()
+                .UseMiddleware<CaDiscoveryMiddleware>()
                 .Build();
 
-            return endpoints.Map($"/{endpointConfiguration.CaEndpoint}", pipeline)
+            return endpoints.Map($"/{endpointConfiguration.CaEndpoint}/{{*pathInfo}}", pipeline)
                 .WithDisplayName("Kuiper: Certificate Authority Discovery");
         }
 

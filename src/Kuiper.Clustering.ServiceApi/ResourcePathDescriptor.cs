@@ -18,14 +18,14 @@ namespace Kuiper.Clustering.ServiceApi
         }
 
         public ResourcePathDescriptor(
-            string api,
+            string group,
             string version,
             string @namespace,
             string resourceKind,
             string? resourceName = null,
             string? subResourcePath = null)
         {
-            Api = api.ToLowerInvariant();
+            Group = group.ToLowerInvariant();
             Version = version.ToLowerInvariant();
             Namespace = @namespace.ToLowerInvariant();
             ResourceKind = resourceKind.ToLowerInvariant();
@@ -33,7 +33,8 @@ namespace Kuiper.Clustering.ServiceApi
             SubResourcePath = subResourcePath?.ToLowerInvariant();
         }
 
-        public string Api { get; set; }
+        public string Group { get; set; }
+
         public string Version { get; set; }
 
         public string Namespace { get; set; }
@@ -49,7 +50,7 @@ namespace Kuiper.Clustering.ServiceApi
 
         public string ApiVersion
         {
-            get => $"{Api}/{Version}";
+            get => $"{Group}/{Version}";
         }
 
         public string ResourceTypeId
@@ -59,7 +60,17 @@ namespace Kuiper.Clustering.ServiceApi
 
         public string ResourceId
         {
-            get => $"{ResourceTypeId}/{ResourceName}";
+            get => this.GetResourceId(ResourceName);
+        }
+
+        public string GetResourceId(string? resourceName)
+        {
+            if (string.IsNullOrWhiteSpace(resourceName))
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+
+            return $"{ResourceTypeId}/{resourceName}";
         }
     }
 
@@ -76,7 +87,7 @@ namespace Kuiper.Clustering.ServiceApi
 
             if (segments.Length < 4)
             {
-                throw new ArgumentException("Full path must have at least 4 segments: api, version, namespace, and resourceType.");
+                throw new ArgumentException("Full path must have at least 4 segments: group, version, namespace, and resourceType.");
             }
 
             return new ResourcePathDescriptor(
