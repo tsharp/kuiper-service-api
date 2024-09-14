@@ -1,4 +1,4 @@
-﻿namespace Kuiper.Clustering.ServiceApi.Resources
+﻿namespace Kuiper.Clustering.Management.Resources
 {
     public class CertificateAuthorityData : CertificateData
     {

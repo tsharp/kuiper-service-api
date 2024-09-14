@@ -1,4 +1,4 @@
-﻿namespace Kuiper.Clustering.ServiceApi.Storage
+﻿namespace Kuiper.Clustering.Management.Storage
 {
     public interface IKeyValueStore
     {

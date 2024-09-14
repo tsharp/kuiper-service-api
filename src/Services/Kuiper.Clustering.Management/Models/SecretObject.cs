@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Kuiper.Clustering.ServiceApi.Dto;
+using Kuiper.Clustering.Management.Dto;
 
-namespace Kuiper.Clustering.ServiceApi.Models
+namespace Kuiper.Clustering.Management.Models
 {
     public class SecretObject<TData> : SystemObject
     {

@@ -1,4 +1,4 @@
-﻿namespace Kuiper.Clustering.ServiceApi
+﻿namespace Kuiper.Clustering.Management
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ResourceTypeAttribute : Attribute

@@ -1,7 +1,7 @@
 ﻿using Kuiper.Clustering.ServiceApi.Security;
 using System.Runtime.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi.Resources
+namespace Kuiper.Clustering.Management.Resources
 {
     [DataContract]
     public class CertificateData

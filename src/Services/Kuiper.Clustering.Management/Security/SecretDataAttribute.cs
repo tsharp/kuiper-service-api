@@ -1,4 +1,4 @@
-﻿namespace Kuiper.Clustering.ServiceApi.Security
+﻿namespace Kuiper.Clustering.Management.Security
 {
     public class SecretDataAttribute : Attribute
     {

@@ -1,8 +1,9 @@
 ﻿using Json.Patch;
-using Kuiper.Clustering.ServiceApi.Dto;
-using Kuiper.Clustering.ServiceApi.Storage;
+using Kuiper.Clustering.Management;
+using Kuiper.Clustering.Management.Dto;
+using Kuiper.Clustering.Management.Storage;
 
-namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
+namespace Kuiper.Clustering.Management.ResourceHandlers
 {
     public abstract class ResourceServiceHandlerBase<TSystemObject> : IResourceServiceHandler
         where TSystemObject : SystemObject

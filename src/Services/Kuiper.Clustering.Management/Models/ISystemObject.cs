@@ -1,4 +1,4 @@
-﻿namespace Kuiper.Clustering.ServiceApi.Models
+﻿namespace Kuiper.Clustering.Management.Models
 {
     public interface ISystemObject
     {

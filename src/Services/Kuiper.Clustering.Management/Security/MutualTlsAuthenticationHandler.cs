@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 
-namespace Kuiper.Clustering.ServiceApi.Security
+namespace Kuiper.Clustering.Management.Security
 {
     public class MutualTlsAuthenticationHandler : AuthenticationHandler<MutualTlsAuthenticationHandlerOptions>
     {

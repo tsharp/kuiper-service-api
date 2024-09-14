@@ -1,9 +1,9 @@
-﻿using Kuiper.Clustering.ServiceApi.Storage.Models;
+﻿using Kuiper.Clustering.Management.Storage.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
 
-namespace Kuiper.Clustering.ServiceApi.Storage
+namespace Kuiper.Clustering.Management.Storage
 {
     public class KvStoreDbContext : DbContext, IKeyValueStore
     {
@@ -17,9 +17,9 @@ namespace Kuiper.Clustering.ServiceApi.Storage
             {
                 lock (lockObject)
                 {
-                    if (!isMigrated && this.Database.GetPendingMigrations().Any())
+                    if (!isMigrated && Database.GetPendingMigrations().Any())
                     {
-                        this.Database.Migrate();
+                        Database.Migrate();
                     }
 
                     isMigrated = true;
@@ -98,7 +98,7 @@ namespace Kuiper.Clustering.ServiceApi.Storage
                     Value = null
                 };
 
-                this.StoreObjects.Add(storeObject);
+                StoreObjects.Add(storeObject);
             }
 
             if (typeof(T) == typeof(byte[]))

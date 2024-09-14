@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.TypeInspectors;
 
-namespace Kuiper.Clustering.ServiceApi.Serialization
+namespace Kuiper.Clustering.Management.Serialization
 {
     public class SortedTypeInspector : TypeInspectorSkeleton
     {

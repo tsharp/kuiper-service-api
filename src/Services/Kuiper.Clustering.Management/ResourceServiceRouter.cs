@@ -1,8 +1,8 @@
-﻿using Kuiper.Clustering.ServiceApi.ResourceHandlers;
+﻿using Kuiper.Clustering.Management.ResourceHandlers;
 using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Kuiper.Clustering.ServiceApi
+namespace Kuiper.Clustering.Management
 {
     public static class ResourceServiceRouter
     {

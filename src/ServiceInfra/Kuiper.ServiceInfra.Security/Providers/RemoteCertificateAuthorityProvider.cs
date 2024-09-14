@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace Kuiper.Core.Security.mTLS.Providers
+namespace Kuiper.ServiceInfra.Security.Providers
 {
     internal class RemoteCertificateAuthorityProvider
     {

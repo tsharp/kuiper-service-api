@@ -1,11 +1,13 @@
-﻿
-using Kuiper.Clustering.ServiceApi.Dto;
+﻿using Kuiper.Clustering.Management;
+using Kuiper.Clustering.Management.Dto;
+using Kuiper.Clustering.Management.Resources;
+using Kuiper.Clustering.Management.Security;
+using Kuiper.Clustering.Management.Storage;
+using Kuiper.Clustering.ServiceApi;
 using Kuiper.Clustering.ServiceApi.Resources;
-using Kuiper.Clustering.ServiceApi.Security;
-using Kuiper.Clustering.ServiceApi.Storage;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Kuiper.Clustering.ServiceApi.ResourceHandlers.v1
+namespace Kuiper.Clustering.Management.ResourceHandlers.v1
 {
     [ResourceType("security.kuiper-sys.com", "v1", "CertificateAuthority")]
     public class CertificateAuthorityResourceHandler : ResourceServiceHandlerBase<CertificateAuthority>
@@ -80,14 +82,14 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers.v1
 
             X509Certificate2? issuerCertificate = null;
 
-            if (await this.configStore.GetAsync<SystemObject>(resourcePathDescriptor.ResourceId, cancellationToken) != null)
+            if (await configStore.GetAsync<SystemObject>(resourcePathDescriptor.ResourceId, cancellationToken) != null)
             {
                 return Results.BadRequest();
             }
 
             if (!string.IsNullOrWhiteSpace(rootCaId))
             {
-                var rootCa = await this.configStore.GetAsync<CertificateAuthority>(resourcePathDescriptor.GetResourceId(rootCaId), cancellationToken);
+                var rootCa = await configStore.GetAsync<CertificateAuthority>(resourcePathDescriptor.GetResourceId(rootCaId), cancellationToken);
 
                 if (rootCa == null)
                 {
@@ -130,7 +132,7 @@ namespace Kuiper.Clustering.ServiceApi.ResourceHandlers.v1
                 }
             };
 
-            var result = await this.configStore.SetAsync(resourcePathDescriptor.ResourceId, certificateAuthority, cancellationToken);
+            var result = await configStore.SetAsync(resourcePathDescriptor.ResourceId, certificateAuthority, cancellationToken);
 
             return Results.Created(resourcePathDescriptor.ResourceId, result);
         }

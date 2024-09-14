@@ -1,8 +1,8 @@
-﻿using Kuiper.Clustering.ServiceApi.Models;
+﻿using Kuiper.Clustering.Management.Models;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi.Resources
+namespace Kuiper.Clustering.Management.Resources
 {
     public class ClientCertificate : SecretObject<CertificateData>
     {

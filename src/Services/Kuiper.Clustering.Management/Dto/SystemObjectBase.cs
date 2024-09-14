@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Kuiper.Clustering.ServiceApi.Models;
+using Kuiper.Clustering.Management.Models;
 
-namespace Kuiper.Clustering.ServiceApi.Dto
+namespace Kuiper.Clustering.Management.Dto
 {
     [DataContract]
     public class SystemObjectBase<TMetadata> : ISystemObject

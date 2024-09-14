@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi
+namespace Kuiper.Clustering.Management
 {
     public class JsonTypeConverter : JsonConverter<Type>
     {

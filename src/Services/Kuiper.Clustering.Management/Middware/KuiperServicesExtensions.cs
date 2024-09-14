@@ -1,6 +1,6 @@
-﻿using Kuiper.Clustering.ServiceApi.Middware.Configuration;
+﻿using Kuiper.Clustering.Management.Middware.Discovery;
 
-namespace Kuiper.Clustering.ServiceApi.Middware
+namespace Kuiper.Clustering.Management.Middware
 {
     public static class KuiperServicesExtensions
     {
@@ -51,7 +51,7 @@ namespace Kuiper.Clustering.ServiceApi.Middware
 
         public static IEndpointRouteBuilder MapKuiperServicesEndpoints(this IEndpointRouteBuilder endpoints, WebApplication app)
         {
-            KuiperEndpointConfiguration endpointConfiguration = 
+            KuiperEndpointConfiguration endpointConfiguration =
                 app.Services.GetRequiredService<KuiperEndpointConfiguration>();
 
             return endpoints.MapKuiperServicesEndpoints(endpointConfiguration);

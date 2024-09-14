@@ -1,4 +1,6 @@
-﻿namespace Kuiper.Clustering.ServiceApi.ResourceHandlers
+﻿using Kuiper.Clustering.Management;
+
+namespace Kuiper.Clustering.Management.ResourceHandlers
 {
     public abstract class SingleNamepsaceResourceServiceBase : IResourceServiceHandler
     {

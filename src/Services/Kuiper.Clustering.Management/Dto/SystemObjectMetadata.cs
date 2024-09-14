@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi.Dto
+namespace Kuiper.Clustering.Management.Dto
 {
     [DataContract]
     public class SystemObjectMetadata

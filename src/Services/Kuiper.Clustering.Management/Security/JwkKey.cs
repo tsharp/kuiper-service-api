@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-namespace Kuiper.Clustering.ServiceApi.Security
+namespace Kuiper.Clustering.Management.Security
 {
     public class JwkKey
     {

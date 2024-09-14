@@ -3,7 +3,7 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi.Serialization
+namespace Kuiper.Clustering.Management.Serialization
 {
     public class JsonElementYamlTypeConverter : IYamlTypeConverter
     {

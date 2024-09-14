@@ -1,7 +1,7 @@
-﻿using Kuiper.Clustering.ServiceApi.Dto;
+﻿using Kuiper.Clustering.Management.Dto;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi
+namespace Kuiper.Clustering.Management
 {
     public class ResourcePathDescriptor
     {
@@ -9,8 +9,8 @@ namespace Kuiper.Clustering.ServiceApi
         {
         }
 
-        public ResourcePathDescriptor(SystemObject @object) : 
-            this(   @object.ApiVersion,
+        public ResourcePathDescriptor(SystemObject @object) :
+            this(@object.ApiVersion,
                     @object.Metadata.Namespace,
                     @object.Kind,
                     @object.Metadata.Name)

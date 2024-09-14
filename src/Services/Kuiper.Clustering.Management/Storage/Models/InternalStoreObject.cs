@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Kuiper.Clustering.ServiceApi.Storage.Models
+namespace Kuiper.Clustering.Management.Storage.Models
 {
     public class InternalStoreObject
     {

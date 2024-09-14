@@ -1,7 +1,7 @@
 ﻿using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Kuiper.Clustering.ServiceApi.Serialization
+namespace Kuiper.Clustering.Management.Serialization
 {
     internal static class YamlExtensions
     {

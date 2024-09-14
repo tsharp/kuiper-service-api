@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Kuiper.Core.Security.mTLS.Providers
+namespace Kuiper.ServiceInfra.Security.Providers
 {
     public interface ICertificateAuthorityProvider
     {

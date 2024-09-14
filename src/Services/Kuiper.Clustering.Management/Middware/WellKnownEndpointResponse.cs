@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi.Middware
+namespace Kuiper.Clustering.Management.Middware
 {
     public class WellKnownEndpointResponse
     {

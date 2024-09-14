@@ -1,13 +1,13 @@
-using Kuiper.Clustering.ServiceApi.Middware;
-using Kuiper.Clustering.ServiceApi.Security;
-using Kuiper.Clustering.ServiceApi.Storage;
+using Kuiper.Clustering.Management.Middware;
+using Kuiper.Clustering.Management.Security;
+using Kuiper.Clustering.Management.Storage;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.ServiceApi
+namespace Kuiper.Clustering.Management
 {
     public class Program
     {
@@ -48,10 +48,10 @@ namespace Kuiper.Clustering.ServiceApi
             builder.Services.AddDbContext<KvStoreDbContext>(options =>
             {
                 // options.UseInMemoryDatabase("kvstore");
-                
+
                 // Get application data directory
                 var application_data = Environment.SpecialFolder.ApplicationData;
-                
+
                 // Create a directory for the application data
                 string application_data_path = Path.Combine(Environment.GetFolderPath(application_data), "kuiper_data");
 

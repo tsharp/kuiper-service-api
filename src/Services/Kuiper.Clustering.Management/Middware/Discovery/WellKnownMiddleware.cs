@@ -1,7 +1,8 @@
-﻿using Kuiper.Clustering.ServiceApi.Resources;
-using Kuiper.Clustering.ServiceApi.Storage;
+﻿using Kuiper.Clustering.Management.Middware;
+using Kuiper.Clustering.Management.Storage;
+using Kuiper.Clustering.ServiceApi.Resources;
 
-namespace Kuiper.Clustering.ServiceApi.Middware.Configuration
+namespace Kuiper.Clustering.Management.Middware.Discovery
 {
     public class WellKnownMiddleware : IMiddleware
     {
