@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectFile Include="Kuiper.Plaform.ManagementObjects\Kuiper.Plaform.ManagementObjects.csproj" />
+  </ItemGroup>
+</Project>

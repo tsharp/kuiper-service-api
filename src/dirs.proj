@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
-    <ProjectFile Include="Kuiper.Clustering.ServiceApi/Kuiper.Clustering.ServiceApi.csproj" />
-    <ProjectFile Include="Kuiper.Core.Security.mTLS/Kuiper.Core.Security.mTLS.csproj" />
+    <ProjectFile Include="Services\dirs.proj" />
+    <ProjectFile Include="Platform\dirs.proj" />
+    <ProjectFile Include="ServiceInfra\dirs.proj" />
   </ItemGroup>
 </Project>
