@@ -1,6 +1,4 @@
-﻿using Kuiper.Clustering.Management.Middware;
-using Kuiper.Clustering.Management.Storage;
-using Kuiper.Clustering.ServiceApi.Resources;
+﻿using Kuiper.Clustering.Management.Storage;
 
 namespace Kuiper.Clustering.Management.Middware.Discovery
 {

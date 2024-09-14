@@ -1,4 +1,4 @@
-﻿using Kuiper.Clustering.ServiceApi.Security;
+﻿using Kuiper.Clustering.Management.Security;
 using System.Runtime.Serialization;
 
 namespace Kuiper.Clustering.Management.Resources
