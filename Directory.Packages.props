@@ -49,6 +49,7 @@
     
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="System.Formats.Asn1" Version="8.0.1" />
   </ItemGroup>
   <ItemGroup>
     <!-- To reference a package in all projects, add it to this list. -->

@@ -8,6 +8,7 @@ using Kuiper.Plaform.ManagementObjects.Secrets;
 using Kuiper.Plaform.ServiceApi;
 using Kuiper.Plaform.ServiceApi.ResourceHandlers;
 using Kuiper.ServiceInfra.Persistence;
+using Kuiper.ServiceInfra.Security.Certificates;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Kuiper.Clustering.Management.ResourceHandlers.v1;

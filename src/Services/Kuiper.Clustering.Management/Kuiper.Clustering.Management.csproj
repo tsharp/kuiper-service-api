@@ -23,5 +23,6 @@
     <ProjectReference Include="..\..\Platform\Kuiper.Plaform.ServiceApi\Kuiper.Plaform.ServiceApi.csproj" />
     <ProjectReference Include="..\..\ServiceInfra\Kuiper.ServiceInfra.Hosting\Kuiper.ServiceInfra.Hosting.csproj" />
     <ProjectReference Include="..\..\ServiceInfra\Kuiper.ServiceInfra.Persistence\Kuiper.ServiceInfra.Persistence.csproj" />
+    <ProjectReference Include="..\..\ServiceInfra\Kuiper.ServiceInfra.Security\Kuiper.ServiceInfra.Security.csproj" />
   </ItemGroup>
 </Project>
