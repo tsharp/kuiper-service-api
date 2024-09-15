@@ -2,7 +2,6 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-using Kuiper.Clustering.Management.Security;
 using Kuiper.Plaform.ManagementObjects;
 using Kuiper.Plaform.ManagementObjects.Secrets;
 using Kuiper.Plaform.ServiceApi;

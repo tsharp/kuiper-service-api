@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -21,14 +22,7 @@ public static class ResourceServiceRouter
     static ResourceServiceRouter()
     {
         // Register all resource handlers to avoid runtime reflection
-        var serviceHandlerTypes = Assembly.GetExecutingAssembly()
-            .GetTypes()
-            .Where(t =>
-                t.IsAssignableTo(typeof(IResourceServiceHandler)) &&
-                t.IsClass &&
-                !t.IsAbstract &&
-                !t.IsInterface &&
-                !t.IsGenericType);
+        var serviceHandlerTypes = GetServiceHandlers(Assembly.GetEntryAssembly(), Assembly.GetCallingAssembly());
 
         foreach (var serviceHandlerType in serviceHandlerTypes)
         {
@@ -39,25 +33,70 @@ public static class ResourceServiceRouter
                 continue;
             }
 
-            Cache[(
-                attribute.Group.ToLowerInvariant(),
-                attribute.Version.ToLowerInvariant(),
-                attribute.ResourceType.ToLowerInvariant())] = serviceHandlerType;
+            // Auto-registration is disabled
+            if (!attribute.AutoRegister)
+            {
+                continue;
+            }
+
+            Cache[(attribute.Group.ToLowerInvariant(),
+                    attribute.Version.ToLowerInvariant(),
+                    attribute.ResourceType.ToLowerInvariant())] = serviceHandlerType;
         }
     }
 
-    public static IServiceCollection AddResourceHandlers(this IServiceCollection services)
+    private static IEnumerable<Type> GetServiceHandlers(this Assembly assembly)
     {
-        var serviceHandlerTypes = Assembly.GetExecutingAssembly()
-            .GetTypes()
+        return assembly.GetTypes()
             .Where(t =>
                 t.IsAssignableTo(typeof(IResourceServiceHandler)) &&
                 t.IsClass &&
                 !t.IsAbstract &&
                 !t.IsInterface &&
                 !t.IsGenericType);
+    }
 
-        foreach (var serviceHandlerType in serviceHandlerTypes)
+    private static IEnumerable<Type> GetServiceHandlers(params Assembly[] assemblies)
+    {
+        if (assemblies == null || !assemblies.Any())
+        {
+            return Array.Empty<Type>();
+        }
+
+        List<Type> services = new List<Type>();
+
+        foreach (var assembly in assemblies.Distinct())
+        {
+            services.AddRange(GetServiceHandlers(assembly));
+        }
+
+        return services.ToArray();
+    }
+
+    public static IServiceCollection AddResourceHandler<T>(this IServiceCollection services)
+        where T : IResourceServiceHandler
+    {
+        var serviceHandlerType = typeof(T);
+        var attribute = serviceHandlerType.GetCustomAttribute<ResourceTypeAttribute>() ??
+            throw new Exception($"Resource handler {serviceHandlerType.Name} is missing ResourceTypeAttribute.");
+
+        if (Cache.Values.Contains(serviceHandlerType))
+        {
+            throw new Exception($"Resource handler {serviceHandlerType.Name} is already registered.");
+        }
+
+        Cache[(attribute.Group.ToLowerInvariant(),
+                attribute.Version.ToLowerInvariant(),
+                attribute.ResourceType.ToLowerInvariant())] = serviceHandlerType;
+
+        services.AddScoped(serviceHandlerType);
+
+        return services;
+    }
+
+    public static IServiceCollection AddResourceHandlers(this IServiceCollection services)
+    {
+        foreach (var serviceHandlerType in Cache.Values.Distinct())
         {
             services.AddScoped(serviceHandlerType);
         }

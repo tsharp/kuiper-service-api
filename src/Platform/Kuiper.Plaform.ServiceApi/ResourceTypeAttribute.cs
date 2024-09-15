@@ -12,11 +12,13 @@ public class ResourceTypeAttribute : Attribute
     public string Group { get; }
     public string Version { get; }
     public string ResourceType { get; }
+    public bool AutoRegister { get; }
 
-    public ResourceTypeAttribute(string group, string version, string resourceType)
+    public ResourceTypeAttribute(string group, string version, string resourceType, bool autoRegister = true)
     {
         Group = group;
         Version = version;
         ResourceType = resourceType;
+        AutoRegister = autoRegister;
     }
 }

@@ -88,7 +88,7 @@ public class Program
         app
             .MapKuiperServicesEndpoints(app)
             .MapKuiperResources();
-        
+
 
         app.Run();
     }
