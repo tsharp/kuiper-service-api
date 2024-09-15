@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
 
-namespace Kuiper.Clustering.Management.Security
+using Microsoft.AspNetCore.Authentication;
+
+namespace Kuiper.Clustering.Management.Security;
+
+public class MutualTlsAuthenticationHandlerOptions : AuthenticationSchemeOptions
 {
-    public class MutualTlsAuthenticationHandlerOptions : AuthenticationSchemeOptions
-    {
-    }
 }

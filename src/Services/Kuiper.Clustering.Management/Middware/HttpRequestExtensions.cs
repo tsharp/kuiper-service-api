@@ -1,34 +1,37 @@
-﻿namespace Kuiper.Clustering.Management.Middware
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
+
+namespace Kuiper.Clustering.Management.Middware;
+
+public static class HttpRequestExtensions
 {
-    public static class HttpRequestExtensions
+    public static string GetRequestBaseUri(this HttpContext httpContext)
+        => httpContext.Request.GetRequestBaseUri();
+
+    public static string GetRequestBaseUri(this HttpRequest request)
     {
-        public static string GetRequestBaseUri(this HttpContext httpContext)
-            => httpContext.Request.GetRequestBaseUri();
+        var forwardedProto = request.Headers["X-Forwarded-Proto"].ToString();
+        var forwardedHost = request.Headers["X-Forwarded-Host"].ToString();
 
-        public static string GetRequestBaseUri(this HttpRequest request)
+        if (string.IsNullOrEmpty(forwardedProto) || string.IsNullOrEmpty(forwardedHost))
         {
-            var forwardedProto = request.Headers["X-Forwarded-Proto"].ToString();
-            var forwardedHost = request.Headers["X-Forwarded-Host"].ToString();
-
-            if (string.IsNullOrEmpty(forwardedProto) || string.IsNullOrEmpty(forwardedHost))
-            {
-                // Fallback to request's scheme and host if headers are not available
-                forwardedProto = request.Scheme;
-                forwardedHost = request.Host.ToString();
-            }
-
-            var baseUri = $"{forwardedProto}://{forwardedHost}";
-
-            return baseUri;
+            // Fallback to request's scheme and host if headers are not available
+            forwardedProto = request.Scheme;
+            forwardedHost = request.Host.ToString();
         }
 
-        public static string CreateServerEndpoint(this HttpRequest request, string path)
-        {
-            var baseUri = request.GetRequestBaseUri();
+        var baseUri = $"{forwardedProto}://{forwardedHost}";
 
-            var endpoint = $"{baseUri}/{path.TrimStart('/')}";
+        return baseUri;
+    }
 
-            return endpoint;
-        }
+    public static string CreateServerEndpoint(this HttpRequest request, string path)
+    {
+        var baseUri = request.GetRequestBaseUri();
+
+        var endpoint = $"{baseUri}/{path.TrimStart('/')}";
+
+        return endpoint;
     }
 }

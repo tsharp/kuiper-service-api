@@ -1,35 +1,38 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 
-namespace Kuiper.Clustering.Management.Security
+namespace Kuiper.Clustering.Management.Security;
+
+public class MutualTlsAuthenticationHandler : AuthenticationHandler<MutualTlsAuthenticationHandlerOptions>
 {
-    public class MutualTlsAuthenticationHandler : AuthenticationHandler<MutualTlsAuthenticationHandlerOptions>
+    public const string SchemeName = "MutualTls";
+    public const string DisplayName = "Mutual TLS Authentication";
+
+    public MutualTlsAuthenticationHandler(
+        IOptionsMonitor<MutualTlsAuthenticationHandlerOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
+        ISystemClock clock) : base(options, logger, encoder, clock)
     {
-        public const string SchemeName = "MutualTls";
-        public const string DisplayName = "Mutual TLS Authentication";
+    }
 
-        public MutualTlsAuthenticationHandler(
-            IOptionsMonitor<MutualTlsAuthenticationHandlerOptions> options,
-            ILoggerFactory logger,
-            UrlEncoder encoder,
-            ISystemClock clock) : base(options, logger, encoder, clock)
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        await Task.CompletedTask;
+
+        // Get the client certificate
+        var clientCert = Context.Connection.ClientCertificate;
+
+        if (clientCert == null)
         {
+            return AuthenticateResult.NoResult();
         }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
-        {
-            await Task.CompletedTask;
-
-            // Get the client certificate
-            var clientCert = Context.Connection.ClientCertificate;
-
-            if (clientCert == null)
-            {
-                return AuthenticateResult.NoResult();
-            }
-
-            return AuthenticateResult.Fail(new NotImplementedException());
-        }
+        return AuthenticateResult.Fail(new NotImplementedException());
     }
 }

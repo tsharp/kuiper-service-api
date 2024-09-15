@@ -1,19 +1,22 @@
-﻿using YamlDotNet.Serialization;
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
+
+using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Kuiper.Clustering.Management.Serialization
-{
-    internal static class YamlExtensions
-    {
-        public static string SerializeToYaml(this object value)
-        {
-            var serializer = new SerializerBuilder()
-                .WithTypeConverter(new JsonElementYamlTypeConverter())
-                .WithTypeInspector(x => new SortedTypeInspector(x))
-                .WithNamingConvention(HyphenatedNamingConvention.Instance)
-                .Build();
+namespace Kuiper.Clustering.Management.Serialization;
 
-            return serializer.Serialize(value);
-        }
+internal static class YamlExtensions
+{
+    public static string SerializeToYaml(this object value)
+    {
+        var serializer = new SerializerBuilder()
+            .WithTypeConverter(new JsonElementYamlTypeConverter())
+            .WithTypeInspector(x => new SortedTypeInspector(x))
+            .WithNamingConvention(HyphenatedNamingConvention.Instance)
+            .Build();
+
+        return serializer.Serialize(value);
     }
 }

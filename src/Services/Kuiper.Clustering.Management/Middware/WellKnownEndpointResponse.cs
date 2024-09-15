@@ -1,16 +1,19 @@
-﻿using System.Text.Json.Serialization;
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
 
-namespace Kuiper.Clustering.Management.Middware
+using System.Text.Json.Serialization;
+
+namespace Kuiper.Clustering.Management.Middware;
+
+public class WellKnownEndpointResponse
 {
-    public class WellKnownEndpointResponse
-    {
-        [JsonPropertyName("well_known")]
-        public string? WellKnownEndpoint { get; set; }
+    [JsonPropertyName("well_known")]
+    public string? WellKnownEndpoint { get; set; }
 
-        [JsonPropertyName("jwks_uri")]
-        public string? KeysEndpoint { get; set; }
+    [JsonPropertyName("jwks_uri")]
+    public string? KeysEndpoint { get; set; }
 
-        [JsonPropertyName("ca_jwks_uri")]
-        public string? CaEndpoint { get; set; }
-    }
+    [JsonPropertyName("ca_jwks_uri")]
+    public string? CaEndpoint { get; set; }
 }

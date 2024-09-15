@@ -1,30 +1,33 @@
-﻿namespace Kuiper.Clustering.Management.Middware
+﻿//---------------------------------------------------------------
+// Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
+//---------------------------------------------------------------
+
+namespace Kuiper.Clustering.Management.Middware;
+
+public class KuiperEndpointConfiguration
 {
-    public class KuiperEndpointConfiguration
+    public KuiperEndpointConfiguration(string baseEndpoint = "kuiper", string wellKnownEndpoint = ".well-known/kuiper-configuration")
     {
-        public KuiperEndpointConfiguration(string baseEndpoint = "kuiper", string wellKnownEndpoint = ".well-known/kuiper-configuration")
-        {
-            WellKnownEndpoint = wellKnownEndpoint;
-            BaseEndpoint = baseEndpoint;
-        }
+        WellKnownEndpoint = wellKnownEndpoint;
+        BaseEndpoint = baseEndpoint;
+    }
 
-        public string WellKnownEndpoint { get; private set; } = ".well-known/kuiper-configuration";
+    public string WellKnownEndpoint { get; private set; } = ".well-known/kuiper-configuration";
 
-        public string BaseEndpoint { get; private set; } = "kuiper";
+    public string BaseEndpoint { get; private set; } = "kuiper";
 
-        public string BaseDiscoveryEndpoint
-        {
-            get => $"{BaseEndpoint}/discovery";
-        }
+    public string BaseDiscoveryEndpoint
+    {
+        get => $"{BaseEndpoint}/discovery";
+    }
 
-        public string KeysEndpoint
-        {
-            get => $"{BaseDiscoveryEndpoint}/keys";
-        }
+    public string KeysEndpoint
+    {
+        get => $"{BaseDiscoveryEndpoint}/keys";
+    }
 
-        public string CaEndpoint
-        {
-            get => $"{BaseDiscoveryEndpoint}/ca";
-        }
+    public string CaEndpoint
+    {
+        get => $"{BaseDiscoveryEndpoint}/ca";
     }
 }
