@@ -2,7 +2,9 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-namespace Kuiper.Clustering.Management.Middware;
+using Microsoft.AspNetCore.Http;
+
+namespace Kuiper.ServiceInfra.Hosting;
 
 public static class HttpRequestExtensions
 {

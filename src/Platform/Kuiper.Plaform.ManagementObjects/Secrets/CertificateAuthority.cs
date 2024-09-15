@@ -6,16 +6,16 @@ using Kuiper.Plaform.ManagementObjects;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.Management.Resources;
+namespace Kuiper.Plaform.ManagementObjects.Secrets;
 
-public class ClientCertificate : SecretObject<CertificateData>
+public class CertificateAuthority : SecretObject<CertificateAuthorityData>
 {
-    public ClientCertificate() : base()
+    public CertificateAuthority() : base()
     {
-        Type = nameof(ClientCertificate);
+        Type = nameof(CertificateAuthority);
     }
 
     [DataMember(Order = 11)]
     [JsonPropertyOrder(11)]
-    public override required string Type { get; set; } = nameof(ClientCertificate);
+    public override required string Type { get; set; } = nameof(CertificateAuthority);
 }

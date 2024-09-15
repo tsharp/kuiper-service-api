@@ -2,8 +2,9 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-using Kuiper.Clustering.Management.Resources;
 using Kuiper.Clustering.Management.Security;
+using Kuiper.Plaform.ManagementObjects.Secrets;
+using Kuiper.ServiceInfra.Hosting.Discovery;
 using Kuiper.ServiceInfra.Persistence;
 using System.IO.Compression;
 using System.Text;

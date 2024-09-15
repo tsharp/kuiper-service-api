@@ -5,7 +5,6 @@
 namespace Kuiper.Plaform.ManagementObjects;
 
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -21,7 +20,6 @@ public class SystemObjectBase<TMetadata> : ISystemObject
     [JsonPropertyOrder(1)]
     public virtual required string Kind { get; set; }
 
-    [Required]
     [DataMember(Order = 20)]
     [JsonPropertyOrder(20)]
     public required SystemObjectMetadata Metadata { get; set; }

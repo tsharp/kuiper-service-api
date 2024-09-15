@@ -2,17 +2,17 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-namespace Kuiper.Clustering.Management.Middware;
+namespace Kuiper.ServiceInfra.Hosting.Discovery;
 
 public class KuiperEndpointConfiguration
 {
-    public KuiperEndpointConfiguration(string baseEndpoint = "kuiper", string wellKnownEndpoint = ".well-known/kuiper-configuration")
+    public KuiperEndpointConfiguration(string baseEndpoint = "kuiper", string wellKnownEndpoint = ".well-known/system-configuration")
     {
         WellKnownEndpoint = wellKnownEndpoint;
         BaseEndpoint = baseEndpoint;
     }
 
-    public string WellKnownEndpoint { get; private set; } = ".well-known/kuiper-configuration";
+    public string WellKnownEndpoint { get; private set; } = ".well-known/system-configuration";
 
     public string BaseEndpoint { get; private set; } = "kuiper";
 

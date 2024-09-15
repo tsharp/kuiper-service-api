@@ -4,7 +4,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Kuiper.Clustering.Management.Middware;
+namespace Kuiper.ServiceInfra.Hosting.Discovery;
 
 public class WellKnownEndpointResponse
 {

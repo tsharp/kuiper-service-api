@@ -2,7 +2,7 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-namespace Kuiper.Plaform.ManagementObjects;
+namespace Kuiper.Plaform.ManagementObjects.Secrets;
 
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;

@@ -13,7 +13,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": ".well-known/kuiper-configuration",
+      "launchUrl": ".well-known/system-configuration",
       "applicationUrl": "http://localhost:5051",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -22,7 +22,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": ".well-known/kuiper-configuration",
+      "launchUrl": ".well-known/system-configuration",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

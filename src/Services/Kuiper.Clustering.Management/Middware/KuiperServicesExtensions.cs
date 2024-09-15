@@ -3,6 +3,7 @@
 //---------------------------------------------------------------
 
 using Kuiper.Clustering.Management.Middware.Discovery;
+using Kuiper.ServiceInfra.Hosting.Discovery;
 
 namespace Kuiper.Clustering.Management.Middware;
 

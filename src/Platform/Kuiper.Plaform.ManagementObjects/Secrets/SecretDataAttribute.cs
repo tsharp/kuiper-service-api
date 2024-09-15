@@ -2,9 +2,10 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-namespace Kuiper.Clustering.Management.Resources;
+using System;
 
-public class CertificateAuthorityData : CertificateData
+namespace Kuiper.Plaform.ManagementObjects.Secrets;
+
+public class SecretDataAttribute : Attribute
 {
-    public bool EnableDiscovery { get; set; } = false;
 }

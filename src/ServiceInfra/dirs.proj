@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
+    <ProjectFile Include="Kuiper.ServiceInfra.Hosting\Kuiper.ServiceInfra.Hosting.csproj" />
     <ProjectFile Include="Kuiper.ServiceInfra.Persistence\Kuiper.ServiceInfra.Persistence.csproj" />
     <ProjectFile Include="Kuiper.ServiceInfra.Security\Kuiper.ServiceInfra.Security.csproj" />
   </ItemGroup>

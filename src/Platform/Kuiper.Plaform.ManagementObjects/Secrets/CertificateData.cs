@@ -2,10 +2,9 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-using Kuiper.Clustering.Management.Security;
 using System.Runtime.Serialization;
 
-namespace Kuiper.Clustering.Management.Resources;
+namespace Kuiper.Plaform.ManagementObjects.Secrets;
 
 [DataContract]
 public class CertificateData

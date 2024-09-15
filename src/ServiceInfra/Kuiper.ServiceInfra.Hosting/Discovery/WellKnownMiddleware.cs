@@ -2,19 +2,18 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
-using Kuiper.ServiceInfra.Persistence;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
-namespace Kuiper.Clustering.Management.Middware.Discovery;
+namespace Kuiper.ServiceInfra.Hosting.Discovery;
 
 public class WellKnownMiddleware : IMiddleware
 {
-    protected readonly IKeyValueStore configStore;
     protected readonly KuiperEndpointConfiguration config;
 
-    public WellKnownMiddleware(IKeyValueStore configStore, KuiperEndpointConfiguration config)
+    public WellKnownMiddleware(KuiperEndpointConfiguration config)
     {
         this.config = config;
-        this.configStore = configStore;
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
