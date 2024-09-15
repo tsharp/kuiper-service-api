@@ -10,5 +10,4 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" />
   </ItemGroup>
 
-
 </Project>

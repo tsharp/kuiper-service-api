@@ -1,7 +1,6 @@
 ﻿using Json.Patch;
-using Kuiper.Clustering.Management;
-using Kuiper.Clustering.Management.Dto;
 using Kuiper.Clustering.Management.Storage;
+using Kuiper.Plaform.ManagementObjects;
 
 namespace Kuiper.Clustering.Management.ResourceHandlers
 {

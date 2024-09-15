@@ -11,7 +11,7 @@
     <!-- Common Pinned Packages -->
     <PackageVersion Include="YamlDotNet" Version="[15.1.6]" />
     <PackageVersion Include="JsonPatch.Net" Version="3.1.0" />
-    <PackageVersion Include="System.Text.Json" Version="8.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.4" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="CommandLineParser" Version="[2.9.1,3.0)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
@@ -46,9 +46,14 @@
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="[1.1.1,2.0)" />
     <PackageVersion Include="MinVer" Version="[5.0.0,6.0)" />
     <PackageVersion Include="StyleCop.Analyzers" Version="[1.1.118,2.0)" />
+    
+    <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
     <!-- To reference a package in all projects, add it to this list. -->
-    <GlobalPackageReference Include="Microsoft.Build.Artifacts" Version="6.1.10" />
+    <GlobalPackageReference Include="Microsoft.Build.Artifacts" Version="6.1.10">
+      <PrivateAssets>all</PrivateAssets>
+    </GlobalPackageReference>
   </ItemGroup>
 </Project>

@@ -5,4 +5,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ComponentModel.Annotations" />
+    <PackageReference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
 </Project>

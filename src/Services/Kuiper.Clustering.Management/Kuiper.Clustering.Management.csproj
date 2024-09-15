@@ -17,4 +17,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Platform\Kuiper.Plaform.ManagementObjects\Kuiper.Plaform.ManagementObjects.csproj" />
+  </ItemGroup>
 </Project>

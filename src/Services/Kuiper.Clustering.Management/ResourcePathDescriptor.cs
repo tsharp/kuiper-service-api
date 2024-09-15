@@ -1,4 +1,4 @@
-﻿using Kuiper.Clustering.Management.Dto;
+﻿using Kuiper.Plaform.ManagementObjects;
 using System.Text.Json.Serialization;
 
 namespace Kuiper.Clustering.Management

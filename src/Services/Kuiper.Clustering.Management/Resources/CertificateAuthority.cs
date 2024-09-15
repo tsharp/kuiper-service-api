@@ -1,4 +1,4 @@
-﻿using Kuiper.Clustering.Management.Models;
+﻿using Kuiper.Plaform.ManagementObjects;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
