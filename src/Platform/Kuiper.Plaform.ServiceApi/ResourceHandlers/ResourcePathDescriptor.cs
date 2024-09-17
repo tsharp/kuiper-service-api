@@ -5,6 +5,7 @@
 using Kuiper.Plaform.ManagementObjects;
 using Kuiper.Plaform.ServiceApi.Data;
 using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Kuiper.Plaform.ServiceApi.ResourceHandlers;
@@ -16,10 +17,12 @@ public sealed class ResourcePathDescriptor
     }
 
     public ResourcePathDescriptor(SystemObject @object) :
-        this(@object.ApiVersion,
-                @object.Metadata.Namespace,
-                @object.Kind,
-                @object.Metadata.Name)
+        this(
+            @object.ApiVersion.Split('/').First(),
+            @object.ApiVersion.Split('/').Last(),
+            @object.Metadata.Namespace,
+            @object.Kind,
+            @object.Metadata.Name)
     {
     }
 
@@ -31,10 +34,25 @@ public sealed class ResourcePathDescriptor
         string? resourceName = null,
         string? subResourcePath = null)
     {
+        if (string.IsNullOrWhiteSpace(group))
+        {
+            throw new ArgumentNullException(nameof(group));
+        }
+
+        if (string.IsNullOrWhiteSpace(version))
+        {
+            throw new ArgumentNullException(nameof(version));
+        }
+
+        if (string.IsNullOrWhiteSpace(@namespace))
+        {
+            throw new ArgumentNullException(nameof(@namespace));
+        }
+
         Group = group.ToLowerInvariant();
         Version = version.ToLowerInvariant();
         Namespace = @namespace.ToLowerInvariant();
-        ResourceKind = resourceKind.ToLowerInvariant();
+        ResourceKind = resourceKind?.ToLowerInvariant();
         ResourceName = resourceName?.ToLowerInvariant();
         SubResourcePath = subResourcePath?.ToLowerInvariant();
     }

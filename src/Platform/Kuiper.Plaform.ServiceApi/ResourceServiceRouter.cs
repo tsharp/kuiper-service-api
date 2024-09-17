@@ -2,6 +2,7 @@
 // Copyright (c) Kuiper Microsystems, LLC.  All rights reserved.
 //---------------------------------------------------------------
 
+using Kuiper.Plaform.ManagementObjects;
 using Kuiper.Plaform.ServiceApi.ResourceHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -117,7 +118,23 @@ public static class ResourceServiceRouter
 
     public static IEndpointRouteBuilder MapKuiperResources(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.Map("/api/{*fullPath}", async (HttpContext httpContext, string fullPath) =>
+        endpoints.MapPut("/api/", async (HttpContext httpContext) =>
+        {
+            httpContext.Request.EnableBuffering(int.MaxValue);
+            var systemObject = await httpContext.Request.ReadFromJsonAsync<SystemObject>();
+            systemObject.Metadata = systemObject.Metadata ?? new SystemObjectMetadata();
+            httpContext.Request.Body.Position = 0;
+
+            var descriptor = new ResourcePathDescriptor(systemObject);
+            var handler = httpContext.RequestServices.ResolveResourceHandler
+                (descriptor.Group, descriptor.Version, descriptor.ResourceKind);
+
+            descriptor.HandlerType = handler.GetType();
+
+            return await handler.HandleRequest(httpContext, descriptor);
+        });
+
+        endpoints.Map("/api/{*fullPath}", async (HttpContext httpContext, string? fullPath) =>
         {
             var descriptor = ResourcePathParser.Parse(fullPath);
             var handler = httpContext.RequestServices.ResolveResourceHandler

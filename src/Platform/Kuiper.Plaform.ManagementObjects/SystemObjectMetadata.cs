@@ -13,11 +13,11 @@ public class SystemObjectMetadata
 {
     [DataMember(Order = 0)]
     [JsonPropertyOrder(0)]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     [DataMember(Order = 10)]
     [JsonPropertyOrder(10)]
-    public required string Namespace { get; set; }
+    public string Namespace { get; set; }
 
     [DataMember(Order = 20)]
     [JsonPropertyOrder(20)]

@@ -24,6 +24,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Configuration.AddKuiperPlatformConfiguration();
 
         // Add services to the container.
         builder.Services.AddAuthorization();
@@ -43,7 +44,7 @@ public class Program
             options.SerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
             options.SerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
             options.SerializerOptions.IgnoreReadOnlyFields = true;
-            options.SerializerOptions.IgnoreReadOnlyProperties = true;
+            options.SerializerOptions.IgnoreReadOnlyProperties = false;
             options.SerializerOptions.IncludeFields = true;
             options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 

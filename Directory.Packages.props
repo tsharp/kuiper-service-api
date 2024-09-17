@@ -9,22 +9,24 @@
   </PropertyGroup>
   <ItemGroup Label="Package Versions used by this repository">
     <!-- Common Pinned Packages -->
+    <PackageVersion Include="Microsoft.ServiceFabric.Services" Version="6.1.2718" />
     <PackageVersion Include="YamlDotNet" Version="[15.1.6]" />
     <PackageVersion Include="JsonPatch.Net" Version="3.1.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.4" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="CommandLineParser" Version="[2.9.1,3.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json " Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
-    
     <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="[7.6.1,8.0.0)" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="[7.6.1,8.0.0)" />
-
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="[8.0.6,9.0.0)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="[8.0.6,9.0.0)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="[8.0.6,9.0.0)" />
-
     <!-- GRPC -->
     <PackageVersion Include="Google.Protobuf" Version="3.27.0" />
     <PackageVersion Include="Grpc.AspNetCore" Version="$(GrpcVersion)" />
@@ -46,10 +48,13 @@
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="[1.1.1,2.0)" />
     <PackageVersion Include="MinVer" Version="[5.0.0,6.0)" />
     <PackageVersion Include="StyleCop.Analyzers" Version="[1.1.118,2.0)" />
-    
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageVersion Include="System.Formats.Asn1" Version="8.0.1" />
+    
+    <!-- Hosting Platforms -->
+    <PackageVersion Include="Microsoft.ServiceFabric.Services" Version="6.1.2718" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Fabric.MSBuild" Version="1.7.9" />
   </ItemGroup>
   <ItemGroup>
     <!-- To reference a package in all projects, add it to this list. -->

@@ -17,12 +17,16 @@ public class SystemObjectBase<TMetadata> : ISystemObject
     public required string ApiVersion { get; set; }
 
     [DataMember(Order = 10)]
-    [JsonPropertyOrder(1)]
+    [JsonPropertyOrder(10)]
     public virtual required string Kind { get; set; }
+
+    [DataMember(Order = 12)]
+    [JsonPropertyOrder(12)]
+    public string ResourceId => $"/{ApiVersion}/{Metadata.Namespace}/{Kind}/{Metadata.Name}".ToLowerInvariant();
 
     [DataMember(Order = 20)]
     [JsonPropertyOrder(20)]
-    public required SystemObjectMetadata Metadata { get; set; }
+    public SystemObjectMetadata Metadata { get; set; } = new SystemObjectMetadata();
 
     [JsonExtensionData]
     public IDictionary<string, object>? Properties { get; set; }
